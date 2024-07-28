@@ -1,12 +1,14 @@
-import type { ComponentProps } from "react"
-import { ButtonStyle } from "./styles"
+import { type ComponentProps, forwardRef } from 'react';
+import { ButtonStyles } from './styles';
 
 export type ButtonProps = ComponentProps<'button'> & {
-  variant?: 'default' | 'outline';
-}
+	variant?: 'default' | 'outline';
+};
 
-export default function Button({children, variant = 'default'}: ButtonProps) {
-  return (
-    <ButtonStyle $variant={variant}>{children}</ButtonStyle>
-  )
-}
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+	({ children, variant = 'default', ...props }, ref) => (
+		<ButtonStyles ref={ref} {...props} $variant={variant}>
+			{children}
+		</ButtonStyles>
+	),
+);

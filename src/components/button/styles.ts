@@ -1,11 +1,11 @@
-import {styled} from "styled-components";
+import {css, styled} from "styled-components";
 import { theme } from "../../styles/theme";
 
 type ButtonProps = {
   $variant: 'default' | 'outline'
 }
 
-export const ButtonStyle = styled.button<ButtonProps>`
+export const ButtonStyles = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,6 +16,10 @@ export const ButtonStyle = styled.button<ButtonProps>`
   border: 0;
   padding: 0 0.75rem;
   transition: all 100ms;
+
+  ${(props) => props.$variant === 'outline' && css`
+    border: 1px solid ${theme.colors.primary};
+    `}
 
   &:hover {
     background-color: ${theme.colors.primarydark};
