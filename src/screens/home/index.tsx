@@ -17,8 +17,10 @@ import {
 	Main,
 	SearchTransaction,
 	Section,
+	TransactionList,
 } from './styles';
 import { Transaction } from '../../components/transaction';
+import { Dialog } from '../../components/dialog';
 
 export function Home() {
 	return (
@@ -26,7 +28,7 @@ export function Home() {
 			<Header>
 				<Logo />
 				<div>
-					<Button>Nova Transação</Button>
+					<Dialog trigger={<Button>Nova Transação</Button>}>Olá</Dialog>					
 					<Button>Nova Transação</Button>
 				</div>
 			</Header>
@@ -96,6 +98,8 @@ export function Home() {
 							<Input variant="black" placeholder="Procurar transação..." />
 							<ButtonIcon />
 						</SearchTransaction>
+					</header>
+						<TransactionList>
 						<Transaction
 						id={1}
 						title="Compra de carro"
@@ -103,7 +107,21 @@ export function Home() {
             amount={10000}
 						category={{ title: 'Automóvel', color: '#FFA500' }}
 						/>
-					</header>
+						<Transaction
+						id={1}
+						title="Compra de carro"
+            date="10/08/2022"
+            amount={10000}
+						category={{ title: 'Automóvel', color: '#FFA500' }}
+						/>
+						<Transaction
+						id={1}
+						title="Compra de carro"
+            date="10/08/2022"
+            amount={10000}
+						category={{ title: 'Automóvel', color: '#FFA500' }}
+						/>
+						</TransactionList>
 				</Aside>
 			</Main>
 		</>
