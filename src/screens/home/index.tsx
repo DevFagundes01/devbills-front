@@ -20,7 +20,7 @@ import {
 	TransactionList,
 } from './styles';
 import { Transaction } from '../../components/transaction';
-import { Dialog } from '../../components/dialog';
+import { CreateCategoryDialog } from '../../components/create-category-dialog';
 
 export function Home() {
 	return (
@@ -28,8 +28,8 @@ export function Home() {
 			<Header>
 				<Logo />
 				<div>
-					<Dialog trigger={<Button>Nova Transação</Button>}>Olá</Dialog>					
 					<Button>Nova Transação</Button>
+					<CreateCategoryDialog/>
 				</div>
 			</Header>
 			<Main>
