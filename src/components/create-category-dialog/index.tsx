@@ -4,6 +4,7 @@ import { Dialog } from '../dialog';
 import { Input } from '../input';
 import { Title } from '../title';
 import { Container } from './styles';
+
 export function CreateCategoryDialog() {
 	const [open, setOpen] = useState(false);
 
