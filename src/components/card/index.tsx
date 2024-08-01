@@ -3,7 +3,7 @@ import {
 	ArrowCircleUpRight,
 	CurrencyCircleDollar,
 } from '@phosphor-icons/react';
-import { formatCurrency } from '../utils/format-currency';
+import { formatCurrency } from '../../../utils/format-currency';
 import { CardStyles } from './styles';
 
 type CardProps = {

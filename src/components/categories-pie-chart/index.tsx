@@ -1,7 +1,7 @@
 import { ResponsivePie } from '@nivo/pie';
 import { useMemo } from 'react';
+import { formatCurrency } from '../../../utils/format-currency';
 import { theme } from '../../styles/theme';
-import { formatCurrency } from '../utils/format-currency';
 
 const apiData = [
 	{
@@ -50,41 +50,41 @@ export function CategoriesPieChart() {
 			data={data}
 			enableArcLabels={false}
 			enableArcLinkLabels={false}
-      colors={({data}) => data.color}
-      margin={{ top: 20}}
-      valueFormat={formatCurrency}
-      theme={{
-        text: {
-          fontSize: 10,
-          fontFamily: 'Lexend',
-        },
-        tooltip: {
-          container: {
-            backgroundColor: theme.colors.black,
-            padding: 16,
-            color: theme.colors.white,
-            fontFamily: 'Lexend',
-            fontSize: 12,
-            borderRadius: 4,
-          },
-        },
-      }}
-      legends={[
-        {
-          anchor: 'top',
-          direction: 'row',
-          justify: false,
-          translateX: 0,
-          translateY: -20,
-          itemWidth: 120,
-          itemHeight: 16,
-          itemTextColor: theme.colors.neutral,
-          itemDirection: 'left-to-right',
-          itemOpacity: 1,
-          symbolSize: 10,
-          symbolShape: 'circle',
-        },
-      ]}
+			colors={({ data }) => data.color}
+			margin={{ top: 20 }}
+			valueFormat={formatCurrency}
+			theme={{
+				text: {
+					fontSize: 10,
+					fontFamily: 'Lexend',
+				},
+				tooltip: {
+					container: {
+						backgroundColor: theme.colors.black,
+						padding: 16,
+						color: theme.colors.white,
+						fontFamily: 'Lexend',
+						fontSize: 12,
+						borderRadius: 4,
+					},
+				},
+			}}
+			legends={[
+				{
+					anchor: 'top',
+					direction: 'row',
+					justify: false,
+					translateX: 0,
+					translateY: -20,
+					itemWidth: 120,
+					itemHeight: 16,
+					itemTextColor: theme.colors.neutral,
+					itemDirection: 'left-to-right',
+					itemOpacity: 1,
+					symbolSize: 10,
+					symbolShape: 'circle',
+				},
+			]}
 		/>
 	);
 }
