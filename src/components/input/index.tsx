@@ -3,14 +3,16 @@ import { InputStyles } from './styles';
 
 type InputProps = ComponentProps<'input'> & {
 	label?: string;
+	error?: string;
 	variant?: 'black' | 'dark';
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-	({ label, variant = 'black', ...props }, ref) => (
+	({ label, error, variant = 'black', ...props }, ref) => (
 		<InputStyles $variant={variant}>
 			{label && <label>{label}</label>}
 			<input ref={ref} {...props} />
+			{error && <p style={{color: 'red'}}>{error}</p>}
 		</InputStyles>
 	),
 );
