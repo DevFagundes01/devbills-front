@@ -1,4 +1,4 @@
-import { formatCurrency } from '../../../utils/format-currency';
+import { formatCurrency } from '../../utils/format-currency';
 import { Content, Info, TransactionStyles } from './styles';
 
 type TransactionProps = {

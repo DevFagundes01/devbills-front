@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import ptBRLocale from 'dayjs/locale/pt-br';
 import { useMemo } from 'react';
 import { theme } from '../../styles/theme';
-import { formatCurrency } from '../../../utils/format-currency';
+import { formatCurrency } from '../../utils/format-currency';
 
 dayjs.locale(ptBRLocale);
 
@@ -70,39 +70,39 @@ export function FinancialEvolutionBarChart() {
 			data={data}
 			keys={['Saldo', 'Receitas', 'Gastos']}
 			colors={[theme.colors.info, theme.colors.primary, theme.colors.error]}
-      indexBy={'month'}
-      groupMode='grouped'
-      enableLabel={false}
-      enableGridY={false}
-      padding={0.2}
-      axisLeft={{
-        tickSize: 0,
-        format: formatCurrency,
-      }}
-      margin={{left: 80, bottom: 28}}
-      theme={{
-        text: {
-          fontFamily: 'Lexend',
-          fontSize: 10,
-        },
-        axis: {
-          ticks: {
-            text: {
-              fill: theme.colors.white
-            }
-          }
-        },
-        tooltip: {
-          container: {
-            backgroundColor: theme.colors.black,
-            padding: 16,
-            color: theme.colors.white,
-            fontFamily: 'Lexend',
-            fontSize: 12,
-            borderRadius: 4,
-          },
-        }
-      }}
+			indexBy={'month'}
+			groupMode="grouped"
+			enableLabel={false}
+			enableGridY={false}
+			padding={0.2}
+			axisLeft={{
+				tickSize: 0,
+				format: formatCurrency,
+			}}
+			margin={{ left: 80, bottom: 28 }}
+			theme={{
+				text: {
+					fontFamily: 'Lexend',
+					fontSize: 10,
+				},
+				axis: {
+					ticks: {
+						text: {
+							fill: theme.colors.white,
+						},
+					},
+				},
+				tooltip: {
+					container: {
+						backgroundColor: theme.colors.black,
+						padding: 16,
+						color: theme.colors.white,
+						fontFamily: 'Lexend',
+						fontSize: 12,
+						borderRadius: 4,
+					},
+				},
+			}}
 		/>
 	);
 }
