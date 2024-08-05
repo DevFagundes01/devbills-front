@@ -1,7 +1,7 @@
 import { formatCurrency } from '../../utils/format-currency';
 import { Content, Info, TransactionStyles } from './styles';
 
-type TransactionProps = {
+export type TransactionProps = {
 	id: number;
 	title: string;
 	date: string;
