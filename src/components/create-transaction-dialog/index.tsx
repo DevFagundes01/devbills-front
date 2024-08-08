@@ -20,7 +20,7 @@ import {
 } from './styles';
 
 export function CreateTransactionDialog() {
-	const { categories, fetchCategories } = useFetchAPI();
+	const { categories, fetchCategories, createTransaction } = useFetchAPI();
 	const [open, setOpen] = useState(false);
 	const [value, setValue] = useState<string>('');
 	const {
@@ -34,7 +34,7 @@ export function CreateTransactionDialog() {
 			title: '',
 			amount: '',
 			date: dayjs().format('DD/MM/YYYY'),
-			type: 'income',
+			type: 'expense',
 		},
 		resolver: zodResolver(createTransactionSchema),
 	});
@@ -70,9 +70,10 @@ export function CreateTransactionDialog() {
 		setOpen(false);
 	}, [reset]);
 
-	const onSubmit = useCallback(() => {
+	const onSubmit = useCallback(async (data: CreateTransactionData) => {
+		await createTransaction(data)
 		handleClose();
-	}, [handleClose]);
+	}, [handleClose, createTransaction]);
 
 	return (
 		<Dialog

@@ -14,7 +14,7 @@ export const ButtonStyles = styled.button`
  transition: all 100ms;
 
  &:hover {
-   background-color: ${theme.colors.primarydark};
+   background-color: ${theme.colors.primaryDark};
  }
 
  svg {
