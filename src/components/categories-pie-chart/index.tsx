@@ -24,6 +24,12 @@ const apiData = [
 	},
 ];
 
+export type CategoryProps = {
+	id: string;
+	title: string;
+	color: string;
+};
+
 type ChartData = {
 	id: string;
 	label: string;
@@ -32,7 +38,11 @@ type ChartData = {
 	color: string;
 };
 
-export function CategoriesPieChart() {
+type CategoriesPieChartProps = {
+	onClick: (category: CategoryProps) => void;
+};
+
+export function CategoriesPieChart({ onClick }: CategoriesPieChartProps) {
 	const data = useMemo<ChartData[]>(() => {
 		const chartData: ChartData[] = apiData.map((item) => ({
 			id: item.title,
@@ -47,6 +57,13 @@ export function CategoriesPieChart() {
 
 	return (
 		<ResponsivePie
+			onClick={({ data }) =>
+				onClick({
+					id: data.externalId,
+					title: data.id,
+					color: data.color,
+				})
+			}
 			data={data}
 			enableArcLabels={false}
 			enableArcLinkLabels={false}

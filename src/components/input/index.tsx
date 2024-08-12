@@ -12,7 +12,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 		<InputStyles $variant={variant}>
 			{label && <label>{label}</label>}
 			<input ref={ref} {...props} />
-			{error && (<p style={{color: 'red', fontSize: '0.625rem'}}>{error}</p>)}
+			{error && <p style={{ color: 'red', fontSize: '0.625rem' }}>{error}</p>}
 		</InputStyles>
 	),
 );

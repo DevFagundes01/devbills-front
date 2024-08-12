@@ -6,15 +6,21 @@ import {
 	useState,
 } from 'react';
 import { APIService } from '../services/api';
-import type { Category } from '../services/api-types';
-import type { createCategoryData, CreateTransactionData } from '../validators/types';
+import type { Category, Transaction } from '../services/api-types';
 import { formatDate } from '../utils/format-date';
+import type {
+	CreateTransactionData,
+	TransactionsFilterData,
+	createCategoryData,
+} from '../validators/types';
 
 interface FetchAPIProps {
 	createCategory: (data: createCategoryData) => Promise<void>;
 	createTransaction: (data: CreateTransactionData) => Promise<void>;
 	fetchCategories: () => Promise<void>;
+	fetchTransactions: (filters: TransactionsFilterData) => Promise<void>;
 	categories: Category[];
+	transactions: Transaction[];
 }
 
 const FetchAPIContext = createContext<FetchAPIProps>({} as FetchAPIProps);
@@ -25,14 +31,15 @@ type FetchAPIProviderProps = {
 
 export function FetchAPIProvider({ children }: FetchAPIProviderProps) {
 	const [categories, setCategories] = useState<Category[]>([]);
+	const [transactions, setTransactions] = useState<Transaction[]>([]);
 
 	const createTransaction = useCallback(async (data: CreateTransactionData) => {
 		await APIService.createTransaction({
 			...data,
 			date: formatDate(data.date),
-			amount: Number(data.amount.replace(/[^0-9]/g, ''))
-		})
-	}, [])
+			amount: Number(data.amount.replace(/[^0-9]/g, '')),
+		});
+	}, []);
 
 	const createCategory = useCallback(async (data: createCategoryData) => {
 		await APIService.createCategory(data);
@@ -43,12 +50,26 @@ export function FetchAPIProvider({ children }: FetchAPIProviderProps) {
 		setCategories(data);
 	}, []);
 
+	const fetchTransactions = useCallback(
+		async (filters: TransactionsFilterData) => {
+			const transactions = await APIService.getTransactions({
+				...filters,
+				beginDate: formatDate(filters.beginDate),
+				endDate: formatDate(filters.endDate),
+			});
+			setTransactions(transactions);
+		},
+		[],
+	);
+
 	return (
 		<FetchAPIContext.Provider
 			value={{
+				categories,
+				transactions,
 				createCategory,
 				fetchCategories,
-				categories,
+				fetchTransactions,
 				createTransaction,
 			}}
 		>

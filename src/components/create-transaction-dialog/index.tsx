@@ -9,7 +9,6 @@ import type { CreateTransactionData } from '../../validators/types';
 import { Button } from '../button';
 import { Dialog } from '../dialog';
 import { Input } from '../input';
-import { Title } from '../title';
 import {
 	Container,
 	CurrencyInput,
@@ -18,6 +17,7 @@ import {
 	RadioForm,
 	RadioGroup,
 } from './styles';
+import Title from '../title';
 
 export function CreateTransactionDialog() {
 	const { categories, fetchCategories, createTransaction } = useFetchAPI();

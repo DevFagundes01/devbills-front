@@ -1,5 +1,11 @@
 import axios from 'axios';
-import type { Category, CreateCategory, CreateTransaction, Transaction } from './api-types';
+import type {
+	Category,
+	CreateCategory,
+	CreateTransaction,
+	Transaction,
+	TransactionsFilter,
+} from './api-types';
 
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class APIService {
@@ -7,10 +13,34 @@ export class APIService {
 		baseURL: import.meta.env.VITE_API_URL,
 	});
 
-	static async createTransaction(createTransactionData: CreateTransaction,): Promise<Transaction> {
+	static async createTransaction(
+		createTransactionData: CreateTransaction,
+	): Promise<Transaction> {
 		const { data } = await APIService.client.post<Transaction>(
-			'/transactions', createTransactionData,
-		)
+			'/transactions',
+			createTransactionData,
+		);
+
+		return data;
+	}
+
+	static async getTransactions({
+		title,
+		categoryId,
+		beginDate,
+		endDate,
+	}: TransactionsFilter): Promise<Transaction[]> {
+		const { data } = await APIService.client.get<Transaction[]>(
+			'/transactions',
+			{
+				params: {
+					...(title?.length && { title }),
+					...(categoryId?.length && { categoryId }),
+					beginDate,
+					endDate,
+				},
+			},
+		);
 
 		return data
 	}

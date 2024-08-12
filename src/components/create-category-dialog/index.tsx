@@ -8,8 +8,8 @@ import type { createCategoryData } from '../../validators/types';
 import { Button } from '../button';
 import { Dialog } from '../dialog';
 import { Input } from '../input';
-import { Title } from '../title';
 import { Container } from './styles';
+import Title from '../title';
 
 export function CreateCategoryDialog() {
 	const { createCategory, fetchCategories } = useFetchAPI();
