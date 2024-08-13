@@ -6,7 +6,7 @@ import {
 	useState,
 } from 'react';
 import { APIService } from '../services/api';
-import type { Category, Transaction } from '../services/api-types';
+import type { Category, Dashboard, Transaction } from '../services/api-types';
 import { formatDate } from '../utils/format-date';
 import type {
 	CreateTransactionData,
@@ -15,10 +15,14 @@ import type {
 } from '../validators/types';
 
 interface FetchAPIProps {
+	dashboard: Dashboard;
 	createCategory: (data: createCategoryData) => Promise<void>;
 	createTransaction: (data: CreateTransactionData) => Promise<void>;
 	fetchCategories: () => Promise<void>;
 	fetchTransactions: (filters: TransactionsFilterData) => Promise<void>;
+	fetchDashboard: (
+		filters: Pick<TransactionsFilterData, 'beginDate' | 'endDate'>,
+	) => Promise<void>;
 	categories: Category[];
 	transactions: Transaction[];
 }
@@ -32,6 +36,7 @@ type FetchAPIProviderProps = {
 export function FetchAPIProvider({ children }: FetchAPIProviderProps) {
 	const [categories, setCategories] = useState<Category[]>([]);
 	const [transactions, setTransactions] = useState<Transaction[]>([]);
+	const [dashboard, setDashboard] = useState<Dashboard>({} as Dashboard);
 
 	const createTransaction = useCallback(async (data: CreateTransactionData) => {
 		await APIService.createTransaction({
@@ -62,6 +67,21 @@ export function FetchAPIProvider({ children }: FetchAPIProviderProps) {
 		[],
 	);
 
+	const fetchDashboard = useCallback(
+		async ({
+			beginDate,
+			endDate,
+		}: Pick<TransactionsFilterData, 'beginDate' | 'endDate'>) => {
+			const dashboard = await APIService.getDashboard({
+				beginDate: formatDate(beginDate),
+				endDate: formatDate(endDate),
+			});
+
+			setDashboard(dashboard);
+		},
+		[],
+	);
+
 	return (
 		<FetchAPIContext.Provider
 			value={{
@@ -71,6 +91,8 @@ export function FetchAPIProvider({ children }: FetchAPIProviderProps) {
 				fetchCategories,
 				fetchTransactions,
 				createTransaction,
+				fetchDashboard,
+				dashboard,
 			}}
 		>
 			{children}

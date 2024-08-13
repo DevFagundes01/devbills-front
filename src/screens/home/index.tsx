@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { X } from '@phosphor-icons/react';
 import { InputMask } from '@react-input/mask';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useState } from 'react';
@@ -22,6 +23,7 @@ import type { TransactionsFilterData } from '../../validators/types';
 import {
 	Aside,
 	Balance,
+	CategoryBadge,
 	ChartAction,
 	ChartContainer,
 	ChartContent,
@@ -47,27 +49,34 @@ export function Home() {
 		resolver,
 	});
 
-	const { transactions, fetchTransactions } = useFetchAPI();
+	const { transactions, dashboard, fetchTransactions, fetchDashboard } =
+		useFetchAPI();
 
 	useEffect(() => {
+		const { beginDate, endDate } = transactionsFilterForm.getValues();
+		fetchDashboard({ beginDate, endDate });
 		fetchTransactions(transactionsFilterForm.getValues());
-	}, [fetchTransactions, transactionsFilterForm]);
+	}, [fetchTransactions, transactionsFilterForm, fetchDashboard]);
 
 	const [selectedCategory, setSelectedCategory] =
 		useState<CategoryProps | null>(null);
 
 	const handleSelectCategory = useCallback(
-		({ id, title, color }: CategoryProps) => {
+		async ({ id, title, color }: CategoryProps) => {
 			setSelectedCategory({ id, title, color });
 			transactionsFilterForm.setValue('categoryId', id);
+
+			await fetchTransactions(transactionsFilterForm.getValues())
 		},
-		[transactionsFilterForm],
+		[transactionsFilterForm, fetchTransactions],
 	);
 
-	const handleDeselectCategory = useCallback(() => {
+	const handleDeselectCategory = useCallback(async () => {
 		setSelectedCategory(null);
 		transactionsFilterForm.setValue('categoryId', '');
-	}, [transactionsFilterForm]);
+
+		await fetchTransactions(transactionsFilterForm.getValues())
+	}, [transactionsFilterForm, fetchTransactions]);
 
 	const onSubmitTransactions = useCallback(() => {
 		async (data: TransactionsFilterData) => {
@@ -75,6 +84,13 @@ export function Home() {
 			console.log(data);
 		};
 	}, [fetchTransactions]);
+
+	const onSubmitDashboard = useCallback(async (data: TransactionsFilterData) => {
+		const { beginDate, endDate } = data;
+
+		await fetchDashboard({ beginDate, endDate });
+		await fetchTransactions(data);
+	}, [fetchDashboard, fetchTransactions]);
 
 	return (
 		<>
@@ -114,15 +130,23 @@ export function Home() {
 							/>
 							<ButtonIcon
 								onClick={transactionsFilterForm.handleSubmit(
-									onSubmitTransactions,
+									onSubmitDashboard,
 								)}
 							/>
 						</InputGroup>
 					</Filters>
 					<Balance>
-						<Card title="Saldo" amount={1000000} />
-						<Card title="Receitas" amount={1000000} variant="incomes" />
-						<Card title="Gastos" amount={1000000 * -1} variant="expenses" />
+						<Card title="Saldo" amount={dashboard?.balance?.balance || 0} />
+						<Card
+							title="Receitas"
+							amount={dashboard?.balance?.incomes || 0}
+							variant="incomes"
+						/>
+						<Card
+							title="Gastos"
+							amount={dashboard?.balance?.expenses * -1 || 0}
+							variant="expenses"
+						/>
 					</Balance>
 					<ChartContainer>
 						<header>
@@ -130,9 +154,21 @@ export function Home() {
 								title="Gastos"
 								subTitle="Despesas por categoria no período"
 							/>
+							{selectedCategory && (
+								<CategoryBadge
+									$color={selectedCategory.color}
+									onClick={handleDeselectCategory}
+								>
+									<X />
+									{selectedCategory.title.toUpperCase()}
+								</CategoryBadge>
+							)}
 						</header>
 						<ChartContent>
-							<CategoriesPieChart onClick={handleSelectCategory} />
+							<CategoriesPieChart
+								expenses={dashboard.expenses}
+								onClick={handleSelectCategory}
+							/>
 						</ChartContent>
 					</ChartContainer>
 					<ChartContainer>
