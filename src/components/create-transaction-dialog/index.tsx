@@ -73,6 +73,7 @@ export function CreateTransactionDialog() {
 	const onSubmit = useCallback(async (data: CreateTransactionData) => {
 		await createTransaction(data)
 		handleClose();
+		alert('Transação cadastrada')
 	}, [handleClose, createTransaction]);
 
 	return (

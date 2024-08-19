@@ -35,6 +35,7 @@ export function CreateCategoryDialog() {
 			await createCategory(data);
 			handleClose();
 			await fetchCategories()
+			alert('Categoria cadastrada')
 		},
 		[handleClose, createCategory, fetchCategories],
 	);
