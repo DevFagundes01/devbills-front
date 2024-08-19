@@ -122,5 +122,9 @@ export const CategoryBadge = styled.span<CategoryBadgeProps>`
  border-radius: 0.125rem;
  cursor: pointer;
 
- 
+ svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  fill: ${theme.colors.error};
+ }
 `

@@ -19,7 +19,7 @@ import Title from '../../components/title';
 import { Transaction } from '../../components/transaction';
 import { useFetchAPI } from '../../hooks/useFetchAPI';
 import { transactionsFilterSchema } from '../../validators/schemas';
-import type { TransactionsFilterData } from '../../validators/types';
+import type { FinancialEvolutionFilterData, TransactionsFilterData } from '../../validators/types';
 import {
 	Aside,
 	Balance,
@@ -49,14 +49,21 @@ export function Home() {
 		resolver,
 	});
 
-	const { transactions, dashboard, fetchTransactions, fetchDashboard } =
+	const financialEvolutionsFilterForm = useForm<FinancialEvolutionFilterData>({
+		defaultValues: {
+			year: dayjs().get('year').toString(),
+		}
+	})
+
+	const { transactions, dashboard, financialEvolution, fetchTransactions, fetchDashboard, fetchFinancialEvolution } =
 		useFetchAPI();
 
 	useEffect(() => {
 		const { beginDate, endDate } = transactionsFilterForm.getValues();
 		fetchDashboard({ beginDate, endDate });
 		fetchTransactions(transactionsFilterForm.getValues());
-	}, [fetchTransactions, transactionsFilterForm, fetchDashboard]);
+		fetchFinancialEvolution(financialEvolutionsFilterForm.getValues());
+	}, [fetchTransactions, transactionsFilterForm, fetchDashboard, fetchFinancialEvolution, financialEvolutionsFilterForm]);
 
 	const [selectedCategory, setSelectedCategory] =
 		useState<CategoryProps | null>(null);
@@ -91,6 +98,10 @@ export function Home() {
 		await fetchDashboard({ beginDate, endDate });
 		await fetchTransactions(data);
 	}, [fetchDashboard, fetchTransactions]);
+
+	const onSubmitFinancialEvolution = useCallback(async (data: FinancialEvolutionFilterData) => {
+    await fetchFinancialEvolution(data);
+  }, [fetchFinancialEvolution]);
 
 	return (
 		<>
@@ -185,12 +196,13 @@ export function Home() {
 									variant="black"
 									label="Ano"
 									placeholder="aaaa"
+									{...financialEvolutionsFilterForm.register('year')}
 								/>
-								<ButtonIcon />
+								<ButtonIcon onClick={financialEvolutionsFilterForm.handleSubmit(onSubmitFinancialEvolution)}/>
 							</ChartAction>
 						</header>
 						<ChartContent>
-							<FinancialEvolutionBarChart />
+							<FinancialEvolutionBarChart financialEvolution={financialEvolution}/>
 						</ChartContent>
 					</ChartContainer>
 				</Section>

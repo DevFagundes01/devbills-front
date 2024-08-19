@@ -5,6 +5,8 @@ import type {
 	CreateTransaction,
 	Dashboard,
 	DashboardFilters,
+	FinancialEvolution,
+	FinancialEvolutionFilters,
 	Transaction,
 	TransactionsFilter,
 } from './api-types';
@@ -15,17 +17,20 @@ export class APIService {
 		baseURL: import.meta.env.VITE_API_URL,
 	});
 
-	static async getDashboard({beginDate, endDate}: DashboardFilters): Promise<Dashboard> {
-		const { data} = await APIService.client.get<Dashboard>(
-			'/transactions/dashboard', 
+	static async getDashboard({
+		beginDate,
+		endDate,
+	}: DashboardFilters): Promise<Dashboard> {
+		const { data } = await APIService.client.get<Dashboard>(
+			'/transactions/dashboard',
 			{
 				params: {
-          beginDate,
-          endDate,
-        },
-			}
-		)
-		
+					beginDate,
+					endDate,
+				},
+			},
+		);
+
 		return data;
 	}
 
@@ -58,7 +63,7 @@ export class APIService {
 			},
 		);
 
-		return data
+		return data;
 	}
 
 	static async createCategory(
@@ -74,6 +79,21 @@ export class APIService {
 
 	static async getCategories(): Promise<Category[]> {
 		const { data } = await APIService.client.get<Category[]>('/categories');
+		return data;
+	}
+
+	static async getFinancialEvolution({
+		year,
+	}: FinancialEvolutionFilters): Promise<FinancialEvolution[]> {
+		const { data } = await APIService.client.get<FinancialEvolution[]>(
+			'/transactions/financial-evolution',
+			{
+				params: {
+					year,
+				},
+			},
+		);
+
 		return data;
 	}
 }

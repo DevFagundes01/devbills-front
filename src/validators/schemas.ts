@@ -44,3 +44,10 @@ export const createTransactionSchema = z.object({
 		errorMap: () => ({ message: 'Selecione um tipo válido' }),
 	}),
 });
+
+
+export const financialEvolutionFiltersSchema = z.object({
+	year: z
+    .string()
+    .regex(/\d/, { message: 'Digite um ano válido' }),
+})
