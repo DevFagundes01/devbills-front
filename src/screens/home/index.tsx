@@ -85,12 +85,12 @@ export function Home() {
 		await fetchTransactions(transactionsFilterForm.getValues())
 	}, [transactionsFilterForm, fetchTransactions]);
 
-	const onSubmitTransactions = useCallback(() => {
+	const onSubmitTransactions = useCallback(
 		async (data: TransactionsFilterData) => {
 			await fetchTransactions(data);
-			console.log(data);
-		};
-	}, [fetchTransactions]);
+		},
+		[fetchTransactions]
+	);
 
 	const onSubmitDashboard = useCallback(async (data: TransactionsFilterData) => {
 		const { beginDate, endDate } = data;
@@ -99,9 +99,11 @@ export function Home() {
 		await fetchTransactions(data);
 	}, [fetchDashboard, fetchTransactions]);
 
-	const onSubmitFinancialEvolution = useCallback(async (data: FinancialEvolutionFilterData) => {
-    await fetchFinancialEvolution(data);
-  }, [fetchFinancialEvolution]);
+	const onSubmitFinancialEvolution = useCallback(
+		async (data: FinancialEvolutionFilterData) => {
+			await fetchFinancialEvolution(data);
+		}, [fetchFinancialEvolution]
+	);
 
 	return (
 		<>
@@ -192,7 +194,7 @@ export function Home() {
 								<InputMask
 									component={Input}
 									mask="aaaa"
-									replacement={{ d: /\d/ }}
+									replacement={{ a: /\d/ }}
 									variant="black"
 									label="Ano"
 									placeholder="aaaa"

@@ -20,6 +20,7 @@ interface FetchAPIProps {
 	financialEvolution: FinancialEvolution[]
 	createCategory: (data: createCategoryData) => Promise<void>;
 	createTransaction: (data: CreateTransactionData) => Promise<void>;
+	updateTransactions: (data: Transaction) => void;
 	fetchCategories: () => Promise<void>;
 	fetchTransactions: (filters: TransactionsFilterData) => Promise<void>;
 	fetchDashboard: (
@@ -42,13 +43,18 @@ export function FetchAPIProvider({ children }: FetchAPIProviderProps) {
 	const [dashboard, setDashboard] = useState<Dashboard>({} as Dashboard);
 	const [financialEvolution, setFinancialEvolution] = useState<FinancialEvolution[]>([]);
 
+	const updateTransactions = useCallback((newTransaction: Transaction) => {
+		setTransactions(prevTransactions => [...prevTransactions, newTransaction]);
+	}, []);
+
 	const createTransaction = useCallback(async (data: CreateTransactionData) => {
-		await APIService.createTransaction({
+		const newTransaction = await APIService.createTransaction({
 			...data,
 			date: formatDate(data.date),
 			amount: Number(data.amount.replace(/[^0-9]/g, '')),
 		});
-	}, []);
+		return newTransaction && updateTransactions(newTransaction);
+	}, [updateTransactions]);
 
 	const createCategory = useCallback(async (data: createCategoryData) => {
 		await APIService.createCategory(data);
@@ -102,6 +108,7 @@ export function FetchAPIProvider({ children }: FetchAPIProviderProps) {
 				fetchCategories,
 				fetchTransactions,
 				createTransaction,
+				updateTransactions,
 				fetchDashboard,
 				dashboard,
 				financialEvolution,
