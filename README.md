@@ -1,5 +1,12 @@
 # React + TypeScript + Vite
 
+Link the Back-End: https://github.com/dfagundes2001/devbills-api
+
+## About the Project
+A financial dashboard where you can create and manage your transactions, specifying amounts, dates, transaction types and custom categories.
+
+![Captura de tela 2024-09-01 201727](https://github.com/user-attachments/assets/7dbc60a2-a031-4e73-bd78-e3df4f6acdaf)
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
