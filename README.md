@@ -1,30 +1,38 @@
-# React + TypeScript + Vite
+# DevBills
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About the Project
+A financial dashboard where you can create and manage your transactions, specifying amounts, dates, transaction types and custom categories.
 
-Currently, two official plugins are available:
+Back-End: Deploy: https://devbills-front.vercel.app/ <br> https://github.com/dfagundes2001/devbills-api 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Captura de tela 2024-09-01 201727](https://github.com/user-attachments/assets/7dbc60a2-a031-4e73-bd78-e3df4f6acdaf)
 
-## Expanding the ESLint configuration
+### 🔧 Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+* Create Transaction
+* Create Transaction Category
+* Search for a Transaction
+* Track your Income, Expense and Balance data
+* Search Balance by period
+* Financial evolution in the year
+* Data demonstration graphs
 
-- Configure the top-level `parserOptions` property like this:
+### 🖥 Technologies Used 
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+* Typescript
+* Zod
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+#### 💻 Front end 
+* Vite
+* React
+* Axios
+* Styled-Components
+* Dayjs
+* React-input-mask
+* Radix-UI
+* Nivo
+
+#### 💻 Back end
+* Node
+* Express
+* MongoDB
